@@ -1181,6 +1181,25 @@ The project includes comprehensive unit tests using XUnit and FluentAssertions. 
 dotnet test
 ```
 
+**Unit test code coverage**:
+
+Run tests with coverage collection
+```bash
+dotnet test --collect:"XPlat Code Coverage"
+```
+
+Generate a human-readable report
+```bash
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+
+Generate the report
+```bash
+reportgenerator -reports:"**\coverage.cobertura.xml" -targetdir:"coveragereport" -reporttypes:Html
+```
+This generates an HTML report in the coveragereport directory, which you can open in your browser to view detailed coverage statistics. We can integrate this in the CI/CD pipeline to verify the code coverage.
+Reference [here](https://learn.microsoft.com/en-us/dotnet/core/testing/unit-testing-code-coverage?tabs=windows). 
+
 ## Implemented Extension Points
 
 The following extension points are implemented as part of the core system:
