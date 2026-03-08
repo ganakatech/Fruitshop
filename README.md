@@ -27,10 +27,25 @@ The system uses three main design patterns:
 
 ### Architecture Flow
 
-```
-API Endpoints → MediatR → Command/Query Handlers → Services → Factory → Pricing Strategies
-                                                      ↓
-                                                  DbContext → SQLite In-Memory DB
+```mermaid
+flowchart TB
+    API[API Endpoints] -->|Sends Commands| MediatR[MediatR]
+    API -->|Sends Queries| MediatR
+    
+    MediatR -->|Routes to| CommandHandlers[Command Handlers]
+    MediatR -->|Routes to| QueryHandlers[Query Handlers]
+    
+    CommandHandlers -->|Uses| Services[Services]
+    QueryHandlers -->|Uses| Services
+    
+    Services -->|Uses| Factory[FruitFactory]
+    Services -->|Uses| DbContext[FruitShopDbContext]
+    
+    Factory -->|Creates| Strategies[Pricing Strategies]
+    
+    DbContext -->|Stores/Retrieves| SQLite[SQLite In-Memory DB]
+    
+    Strategies -->|Calculates| Price[Order Total]
 ```
 
 ## Design Patterns Used
